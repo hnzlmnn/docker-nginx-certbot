@@ -97,6 +97,9 @@ is_renewal_required() {
 # to /etc/nginx/conf.d so they are included as configs
 # this allows a user to easily mount their own configs
 link_user_configs() {
+    # Removes all broken symlinks
+    find -L . -name . -o -type d -prune -o -type l -exec rm {} +
+
     SOURCE_DIR="${1-/etc/nginx/user.conf.d}"
     TARGET_DIR="${2-/etc/nginx/conf.d}"
 
